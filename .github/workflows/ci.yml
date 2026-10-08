@@ -1,0 +1,45 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: test-password
+          MYSQL_DATABASE: smart_electricity_test
+        ports: [3306:3306]
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -ptest-password"
+          --health-interval=5s --health-timeout=3s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm, cache-dependency-path: web/package-lock.json }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: python -m pip install -r ml-service/requirements.txt
+      - run: pytest
+        working-directory: ml-service
+      - run: npm ci
+        working-directory: web
+      - run: npm run build:server && npm run migration:run:compiled
+        working-directory: web
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASSWORD: test-password
+          DB_NAME: smart_electricity_test
+          JWT_SECRET: test-only-secret-at-least-32-characters
+      - run: npm test
+        working-directory: web
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASSWORD: test-password
+          DB_NAME: smart_electricity_test
+          JWT_SECRET: test-only-secret-at-least-32-characters
+          RUN_API_INTEGRATION: '1'

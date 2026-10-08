@@ -4,28 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login – Senior Project II</title>
-  <!-- Reuse the same style file, so the page has the same grey look -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
     <h1>Login</h1>
 
-    <!-- The form collects the user's data. id="loginForm" lets script.js find it -->
     <form class="auth-form" id="loginForm">
       <label for="email">Email</label>
-      <input type="email" id="email" required>
+      <input type="email" id="email" autocomplete="email" required>
 
       <label for="password">Password</label>
-      <input type="password" id="password" required>
+      <input type="password" id="password" autocomplete="current-password" required>
 
+      <p class="error" id="formError" role="alert"></p>
       <button type="submit" class="btn btn-solid">Login</button>
     </form>
 
-    <!-- A link to switch to the other page -->
     <p class="tag">No account yet? <a href="register.html">Register</a></p>
     <p class="tag"><a href="index.html">← Back to home</a></p>
   </main>
-  <script src="script.js"></script>
+  <script type="module">
+    import { getToken } from "./js/api.js";
+    if (getToken()) location.replace("dashboard.html");
+  </script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>

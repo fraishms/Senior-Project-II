@@ -1,5 +1,5 @@
-<!-- 
-This is our Senior Project II for Smart Electricity System, for our graduation from Prince Musaid bin Abdulrahman University 
+<!--
+This is our Senior Project II for the Smart Electricity System, for our graduation from Saudi Electronic University.
 
 The members:
 S220010446 - Mahdy Fraish
@@ -8,81 +8,56 @@ S230005370 - Jafar Al Qahtani
 S230040284 - Mohammed Al Meatiq
 S230041499 - Waleed Al Ageel
 
-Project Supervisor: 
-Hamed Alsufyani 
+Project Supervisor:
+Hamed Alsufyani
 
-Here is a breif introduction of the project:
+Pages:
 1. Home Page
 2. Register/Login Page
-3. Dashboard
-- Monitor Comsumption
-- Insert Consumption
-- Visualize Consumption
-- Compare Consumption
-
-
+3. Dashboard (insert, visualize, compare consumption, predict next bill)
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Character encoding, so all letters display correctly -->
   <meta charset="utf-8">
-
-  <!-- Makes the page fit phone screens properly -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-  <!-- Text shown on the browser tab -->
   <title>Senior Project II – Smart Electricity System</title>
-
-  <!-- Load the "Sora" font from Google Fonts (optional, the page still works without it) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Link to our CSS file (all the styling lives there) -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <!-- "main" holds everything in the center of the page -->
   <main>
-    <!-- Navigation bar: Login and Register buttons -->
     <nav class="auth-buttons">
-      <!-- href tells the browser which page to open when the button is clicked -->
       <a href="login.html" class="btn btn-outline">Login</a>
       <a href="register.html" class="btn btn-solid">Register</a>
     </nav>
-    <!-- LOGO: drawn with SVG. It is a circle, four bars (consumption) and a lightning bolt (electricity). -->
+
+    <!-- LOGO: a circle, four bars (consumption) and a lightning bolt (electricity). -->
     <svg class="logo" viewBox="0 0 200 200" role="img" aria-label="Senior Project II logo">
-      <!-- Outer ring -->
       <circle cx="100" cy="100" r="92" fill="none" stroke="var(--ink)" stroke-width="8"/>
-      <!-- Four bars that grow from left to right, like rising consumption -->
       <rect class="bar" x="46"  y="124" width="16" height="30" rx="3" fill="var(--ink)" opacity=".45"/>
       <rect class="bar" x="70"  y="112" width="16" height="42" rx="3" fill="var(--ink)" opacity=".6"/>
       <rect class="bar" x="114" y="100" width="16" height="54" rx="3" fill="var(--ink)" opacity=".75"/>
       <rect class="bar" x="138" y="86"  width="16" height="68" rx="3" fill="var(--ink)"/>
-      <!-- Lightning bolt in the middle -->
       <path d="M108 34 72 108h26l-8 50 40-74h-27z" fill="var(--accent)" stroke="var(--bg)" stroke-width="5" stroke-linejoin="round"/>
     </svg>
 
-    <!-- Project name -->
     <h1>Senior Project II</h1>
 
-    <!-- Short description of the project -->
     <p class="tag">A smart electricity system that tracks how much power you use and predicts what you will use next.</p>
 
-    <!-- Three main features of the project -->
-    <ul>
-      <li><strong>Track consumption</strong><span>See your usage in real time, by day, week and month.</span></li>
-      <li><strong>Predict demand</strong><span>Forecast upcoming consumption from your past usage.</span></li>
-      <li><strong>Save energy</strong><span>Spot waste and plan ahead to lower your bill.</span></li>
+    <ul class="features">
+      <li><strong>Track consumption</strong><span>Enter your usage every week and see it in clear charts.</span></li>
+      <li><strong>Predict demand</strong><span>Forecast next month's consumption and bill from your past usage.</span></li>
+      <li><strong>Save energy</strong><span>Get alerts and tips when your usage rises above normal.</span></li>
     </ul>
   </main>
 
-  <!-- Footer: the year is filled in automatically by script.js -->
   <footer>© <span id="year"></span> Senior Project II – in development</footer>
 
-  <!-- Link to our JavaScript file (placed last so the page loads first) -->
-  <script src="script.js"></script>
+  <script type="module" src="js/home.js"></script>
 </body>
 </html>
