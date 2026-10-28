@@ -1,0 +1,40 @@
+{
+  "name": "smart-electricity-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Web app for the Smart Electricity System (Senior Project II)",
+  "scripts": {
+    "build:server": "tsc -p tsconfig.json",
+    "build:client": "tsc -p tsconfig.client.json",
+    "build": "npm run build:server && npm run build:client",
+    "start": "node dist/src/server.js",
+    "seed": "ts-node-dev --transpile-only --exit-child scripts/seed.ts",
+    "migration:run": "npm run build:server && typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "migration:run:compiled": "typeorm migration:run -d dist/src/data-source.js",
+    "migration:revert": "npm run build:server && typeorm-ts-node-commonjs migration:revert -d src/data-source.ts",
+    "migration:show": "npm run build:server && typeorm-ts-node-commonjs migration:show -d src/data-source.ts",
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "test": "npm run build:server && node --test dist/src/test/analytics.test.js dist/src/test/api.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^5.0.1",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.31"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.3.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}

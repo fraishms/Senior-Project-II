@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+__pycache__/
+.venv/
+.pytest_cache/
+*.log
+coverage/
+*.tsbuildinfo
+*.pyc
+*.docx
+web/public/js/
+web/migrations/*.js
+ml-service/results.md
+scripts

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register – Senior Project II</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Register</h1>
+
+    <form class="auth-form" id="registerForm">
+      <label for="fullName">Full name (optional)</label>
+      <input type="text" id="fullName" autocomplete="name" maxlength="100">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="email" required>
+
+      <label for="password">Password (at least 8 characters)</label>
+      <input type="password" id="password" autocomplete="new-password" minlength="8" required>
+
+      <p class="error" id="formError" role="alert"></p>
+      <button type="submit" class="btn btn-solid">Register</button>
+    </form>
+
+    <p class="tag">Already registered? <a href="login.html">Login</a></p>
+    <p class="tag"><a href="index.html">← Back to home</a></p>
+  </main>
+  <script type="module">
+    import { getToken } from "./js/api.js";
+    if (getToken()) location.replace("dashboard.html");
+  </script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

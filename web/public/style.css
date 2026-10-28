@@ -15,6 +15,9 @@
   --muted: #555b63;   /* softer text color */
   --line: #b4b8bd;    /* thin lines above the features */
   --accent: #f2a900;  /* yellow of the lightning bolt */
+  --danger: #b3261e;  /* error and alert text */
+  --chart: #f2a900;
+  --surface: #f5f6f7;
 }
 
 /* If the visitor's device uses dark mode, switch to a darker grey */
@@ -24,6 +27,8 @@
     --ink: #f1f2f3;
     --muted: #b9bdc3;
     --line: #555a61;
+    --danger: #ff8a80;
+    --surface: #303338;
   }
 }
 
@@ -34,25 +39,23 @@
 
 /* ==========================================================
    2. PAGE LAYOUT
-   Flexbox is used to put everything in the center of the screen.
    ========================================================== */
 body {
   margin: 0;
-  min-height: 100vh;                 /* at least the full screen height */
-  background: var(--bg);             /* grey background */
+  min-height: 100vh;
+  background: var(--bg);
   color: var(--ink);
   font-family: 'Sora', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 
   display: flex;
-  flex-direction: column;            /* stack items from top to bottom */
-  align-items: center;               /* center horizontally */
-  justify-content: center;           /* center vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   padding: 48px 24px;
   text-align: center;
 }
 
-/* The content block: limited width so text stays easy to read */
 main {
   width: 100%;
   max-width: 760px;
@@ -65,30 +68,25 @@ main {
    3. LOGO
    ========================================================== */
 .logo {
-  /* Size changes with screen width, but stays between 150px and 210px */
   width: clamp(150px, 28vw, 210px);
   height: auto;
-  cursor: pointer;                   /* hand cursor, because clicking replays the animation */
+  cursor: pointer;
 }
 
-/* Each bar grows upward from its bottom edge when the page loads */
 .logo .bar {
   transform-origin: 50% 100%;
   animation: grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-/* Start each bar slightly later so they grow one after another */
 .logo .bar:nth-of-type(2) { animation-delay: 0.1s; }
 .logo .bar:nth-of-type(3) { animation-delay: 0.2s; }
 .logo .bar:nth-of-type(4) { animation-delay: 0.3s; }
 
-/* The animation itself: from flat (0) to full height (1) */
 @keyframes grow {
   from { transform: scaleY(0); }
   to   { transform: scaleY(1); }
 }
 
-/* Respect visitors who turned off animations in their device settings */
 @media (prefers-reduced-motion: reduce) {
   .logo .bar { animation: none; }
 }
@@ -98,7 +96,7 @@ main {
    ========================================================== */
 h1 {
   margin: 28px 0 10px;
-  font-size: clamp(2rem, 6vw, 3rem); /* responsive title size */
+  font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -108,39 +106,39 @@ h1 {
   font-size: clamp(1rem, 2.4vw, 1.2rem);
   font-weight: 300;
   color: var(--muted);
-  max-width: 34em;                   /* keeps lines from getting too long */
+  max-width: 34em;
   line-height: 1.6;
 }
 
 /* ==========================================================
-   5. FEATURES LIST
+   5. FEATURES LIST (home page)
    ========================================================== */
-ul {
-  list-style: none;                  /* remove bullet points */
+.features {
+  list-style: none;
   margin: 44px 0 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;                   /* items drop to the next line on small screens */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 12px 40px;
   width: 100%;
 }
 
-li {
+.features li {
   flex: 1 1 200px;
   max-width: 230px;
   padding-top: 14px;
-  border-top: 2px solid var(--line); /* thin line above each feature */
+  border-top: 2px solid var(--line);
 }
 
-li strong {
+.features li strong {
   display: block;
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 6px;
 }
 
-li span {
+.features li span {
   font-size: 0.9rem;
   line-height: 1.55;
   color: var(--muted);
@@ -158,46 +156,112 @@ footer {
 /* ==========================================================
    7. LOGIN / REGISTER BUTTONS
    ========================================================== */
-
-/* Position the button group in the top-right corner of the page */
 .auth-buttons {
   position: absolute;
   top: calc(20px + env(safe-area-inset-top, 0px));
   right: 24px;
   display: flex;
-  gap: 10px;                          /* space between the two buttons */
+  gap: 10px;
 }
 
-/* Shared style for both buttons */
 .btn {
+  min-height: 44px;
   padding: 10px 22px;
-  border-radius: 8px;                 /* rounded corners */
+  border-radius: 8px;
   border: 2px solid var(--ink);
-  font-family: inherit;               /* use the same font as the page */
+  font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
-  text-decoration: none;              /* remove the link underline */
+  text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s;           /* smooth change on hover */
+  transition: opacity 0.2s;
 }
 
-/* Login: transparent with an outline */
-.btn-outline {
-  background: transparent;
-  color: var(--ink);
-}
+.btn-outline { background: transparent; color: var(--ink); }
+.btn-solid   { background: var(--ink); color: var(--bg); }
+.btn:hover   { opacity: 0.8; }
 
-/* Register: filled, so it stands out as the main action */
-.btn-solid {
-  background: var(--ink);
-  color: var(--bg);
-}
-
-/* When the mouse is over a button, make it slightly lighter */
-.btn:hover { opacity: 0.8; }
-
-/* Shows an outline when using the keyboard (important for accessibility) */
 .btn:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ==========================================================
+   8. FORMS (login, register, data entry)
+   ========================================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 340px;
+  margin: 24px 0 16px;
+  text-align: left;
+}
+
+.auth-form label { font-size: 0.9rem; font-weight: 600; }
+
+.auth-form input {
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.auth-form input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.auth-form .btn { margin-top: 12px; }
+
+.error { min-height: 1.4em; margin: 0; font-size: 0.9rem; color: var(--danger); }
+
+/* ==========================================================
+   9. DASHBOARD
+   ========================================================== */
+.dashboard { max-width: 900px; align-items: stretch; text-align: left; gap: 24px; }
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dash-header h1 { margin: 0; font-size: 1.8rem; }
+
+.card {
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+}
+.card h2 { margin: 0 0 12px; font-size: 1.1rem; }
+.card p  { margin: 4px 0; color: var(--muted); }
+.card .value { color: var(--ink); font-weight: 600; }
+
+.entry-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.entry-row .auth-form { flex-direction: row; flex-wrap: wrap; align-items: flex-end; max-width: none; margin: 0; }
+
+.alert-box {
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-weight: 600;
+}
+
+.tips { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.6; }
+
+button:disabled { opacity: .55; cursor: wait; }
+.table-wrap { max-width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); }
+td .btn { padding: 8px 12px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 480px) {
+  body { padding: 24px 12px; }
+  .dashboard { gap: 14px; }
+  .card { padding: 14px; }
+  .entry-row .auth-form { flex-direction: column; align-items: stretch; }
+  .entry-row .auth-form > div, .entry-row input { width: 100%; }
+  .dash-header h1 { font-size: 1.5rem; }
 }

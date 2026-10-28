@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard – Senior Project II</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body class="protected-page" hidden>
+  <main class="dashboard">
+    <div class="dash-header">
+      <h1>Dashboard</h1>
+      <button class="btn btn-outline" id="logout" type="button">Log out</button>
+    </div>
+
+    <div class="alert-box" id="alert" role="alert" hidden></div>
+    <p class="error" id="loadError" role="alert" hidden>Dashboard data could not be loaded. Refresh to retry.</p>
+
+    <section class="card">
+      <h2>Add weekly consumption</h2>
+      <div class="entry-row">
+        <form class="auth-form" id="entryForm">
+          <div>
+            <label for="date">Any date in the week</label><br>
+            <input type="date" id="date" required>
+          </div>
+          <div>
+            <label for="units">Units used (kWh)</label><br>
+            <input type="number" id="units" min="0" step="0.01" required>
+          </div>
+          <button type="submit" class="btn btn-solid">Save</button>
+        </form>
+      </div>
+      <p class="error" id="entryError" role="alert"></p>
+    </section>
+
+    <section class="card">
+      <h2>Account settings</h2>
+      <form class="auth-form" id="settingsForm">
+        <label for="fullName">Full name</label>
+        <input id="fullName" maxlength="100" required>
+        <fieldset class="tariff-options">
+          <legend>Bill tariff</legend>
+          <label><input type="radio" name="tariffMode" value="tiered" checked> Tiered: first 6,000 kWh at 0.18 SAR/kWh; above that at 0.30 SAR/kWh</label>
+          <label><input type="radio" name="tariffMode" value="flat_override"> Use my flat rate instead</label>
+          <label for="pricePerKwh">Flat override (SAR/kWh)</label>
+          <input id="pricePerKwh" type="number" min="0.0001" max="5" step="0.0001" disabled>
+        </fieldset>
+        <button class="btn btn-solid" id="settingsSave" type="submit">Save settings</button>
+      </form>
+      <p id="settingsMessage" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>Monthly usage</h2>
+      <p id="monthlyComparison">–</p>
+      <ul id="monthlyList"></ul>
+    </section>
+
+    <section class="card">
+      <h2>History</h2>
+      <p>Week starts Monday. The alert threshold is 20% above your average of earlier weeks.</p>
+      <div class="table-wrap" role="region" aria-label="Weekly consumption history" tabindex="0">
+        <table><thead><tr><th>Week</th><th>kWh</th><th>Edit</th><th>Delete</th></tr></thead><tbody id="historyRows"></tbody></table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Weekly usage</h2>
+      <canvas id="chart" aria-label="Weekly electricity usage chart" role="img"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Summary</h2>
+      <p>Average per week: <span class="value" id="avg">–</span></p>
+      <p>This week vs last week: <span class="value" id="compare">–</span></p>
+    </section>
+
+    <section class="card">
+      <h2>Next month's prediction</h2>
+      <button class="btn btn-solid" id="predictBtn" type="button">Predict next bill</button>
+      <p id="prediction"></p>
+    </section>
+
+    <section class="card">
+      <h2>Energy-saving tips</h2>
+      <ul class="tips" id="tips"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Alert history</h2>
+      <ul id="alertHistory"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Recent predictions</h2>
+      <ul id="predictionHistory"></ul>
+    </section>
+  </main>
+  <script type="module">
+    import { getToken } from "./js/api.js";
+    if (!getToken()) location.replace("login.html"); else document.body.hidden = false;
+  </script>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
